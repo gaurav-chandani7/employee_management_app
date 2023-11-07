@@ -24,6 +24,17 @@ class EmployeeRepositoryImpl implements EmployeeRepository {
   Future<void> deleteEmployee(int id) {
     return _appDatabase.deleteEmployee(id);
   }
+
+  @override
+  Future<void> updateEmployee(EditEmployeeParams editEmployeeParams) {
+    return _appDatabase.updateEmployee(
+        key: editEmployeeParams.id,
+        employeeItemHiveModel: EmployeeItemHiveModel(
+            name: editEmployeeParams.employeeName,
+            role: editEmployeeParams.role.employeeRoleHive,
+            startDate: editEmployeeParams.startDate,
+            endDate: editEmployeeParams.endDate));
+  }
 }
 
 extension EmployeeRoleToHive on EmployeeRole {

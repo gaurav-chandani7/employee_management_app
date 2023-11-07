@@ -30,6 +30,14 @@ class EmployeeListPageBloc
       //Refresh data after entry is deleted
       add(FetchEmployeeList());
     });
+    on<NavigateToEditEmployeeScreen>((event, emit) async {
+      var pageRes = await Navigator.of(event.context)
+          .pushNamed(Routes.editEmployee.path, arguments: event.employeeItem);
+      if (pageRes == true) {
+        //Refresh data after record is updated
+        add(FetchEmployeeList());
+      }
+    });
   }
 
   final GetEmployeeListUseCase _getEmployeeListUseCase;

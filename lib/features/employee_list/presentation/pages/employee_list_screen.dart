@@ -51,6 +51,8 @@ class _EmployeeListScreenState extends State<EmployeeListScreen> {
                           data[index].name,
                         ),
                         subtitle: Text(data[index].role.roleDisplayName),
+                        onTap: () => bloc.add(NavigateToEditEmployeeScreen(
+                            context: context, employeeItem: data[index])),
                       ),
                     );
                   }),

@@ -9,7 +9,8 @@ class CommonTextField extends StatelessWidget {
       this.validator,
       this.onTap,
       this.readOnly = false,
-      this.controller});
+      this.controller,
+      this.initialValue});
   final String? hintText;
   final Widget? prefixIcon;
   final void Function(String?)? onSaved;
@@ -17,6 +18,7 @@ class CommonTextField extends StatelessWidget {
   final void Function()? onTap;
   final bool readOnly;
   final TextEditingController? controller;
+  final String? initialValue;
 
   @override
   Widget build(BuildContext context) {
@@ -26,6 +28,7 @@ class CommonTextField extends StatelessWidget {
       onTap: onTap,
       readOnly: readOnly,
       controller: controller,
+      initialValue: initialValue,
       decoration: InputDecoration(
         hintText: hintText,
         prefixIcon: prefixIcon,

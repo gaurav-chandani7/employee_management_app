@@ -2,6 +2,7 @@ import 'package:employee_management_app/core/core.dart';
 import 'package:employee_management_app/dependencies_injection.dart';
 import 'package:employee_management_app/features/employee_list/domain/entities/entities.dart';
 import 'package:employee_management_app/features/employee_list/presentation/presentation.dart';
+import 'package:employee_management_app/features/employee_list/presentation/widgets/bottom_button_section.dart';
 import 'package:employee_management_app/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -109,40 +110,14 @@ class _AddEmployeeScreenState extends State<AddEmployeeScreen> {
                     ],
                   ),
                 ),
-                Align(
-                  alignment: Alignment.bottomCenter,
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      const Divider(),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          ElevatedButton(
-                              onPressed: () => Navigator.of(context).pop(),
-                              child: const Text("Cancel")),
-                          const SizedBox(
-                            width: 10,
-                          ),
-                          ElevatedButton(
-                              onPressed: () {
-                                if (_formKey.currentState?.validate() ??
-                                    false) {
-                                  _formKey.currentState?.save();
-                                  cubit.addEmployeeOperation(
-                                      context: context,
-                                      addEmployeeParams: addEmployeeParams);
-                                }
-                              },
-                              child: const Text("Save")),
-                          const SizedBox(
-                            width: 10,
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                )
+                BottomButtonSection(
+                    cancelOnPressed: () => Navigator.of(context).pop(),
+                    saveOnPressed: () {
+                      if (_formKey.currentState?.validate() ?? false) {
+                        _formKey.currentState?.save();
+                        cubit.addEmployeeOperation(addEmployeeParams);
+                      }
+                    })
               ],
             ),
           ),

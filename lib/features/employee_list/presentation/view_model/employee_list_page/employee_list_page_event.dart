@@ -16,3 +16,11 @@ class DeleteEmployeeRecordEvent extends EmployeeListPageEvent {
 
   DeleteEmployeeRecordEvent({required this.id});
 }
+
+class NavigateToEditEmployeeScreen extends EmployeeListPageEvent {
+  final BuildContext context;
+  final EmployeeItemEntity employeeItem;
+
+  NavigateToEditEmployeeScreen(
+      {required this.context, required this.employeeItem});
+}

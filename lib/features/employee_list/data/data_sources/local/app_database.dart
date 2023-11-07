@@ -5,7 +5,8 @@ abstract class AppDatabase {
   List<EmployeeItemModel> getEmployeeList();
   Future<int> addEmployee(EmployeeItemHiveModel employeeItemHiveModel);
   Future<void> deleteEmployee(int id);
-  Future updateEmployee(EmployeeItemHiveModel employeeItemHiveModel);
+  Future<void> updateEmployee(
+      {required int key, required EmployeeItemHiveModel employeeItemHiveModel});
 }
 
 class AppDatabaseImpl implements AppDatabase {
@@ -28,7 +29,9 @@ class AppDatabaseImpl implements AppDatabase {
   }
 
   @override
-  Future updateEmployee(EmployeeItemHiveModel employeeItemHiveModel) {
-    return _box.put(employeeItemHiveModel.key, employeeItemHiveModel);
+  Future<void> updateEmployee(
+      {required int key,
+      required EmployeeItemHiveModel employeeItemHiveModel}) {
+    return _box.put(key, employeeItemHiveModel);
   }
 }

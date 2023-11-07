@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:employee_management_app/features/employee_list/domain/entities/entities.dart';
 import 'package:employee_management_app/features/employee_list/domain/usecases/usecases.dart';
 import 'package:flutter/material.dart';
@@ -12,10 +10,7 @@ class AddEmployeePageCubit extends Cubit<AddEmployeePageState> {
       : super(AddEmployeePageInitial());
   final AddEmployeeUseCase _addEmployeeUseCase;
 
-  addEmployeeOperation(
-      {required BuildContext context,
-      required AddEmployeeParams addEmployeeParams}) async {
-    log(addEmployeeParams.toString());
+  addEmployeeOperation(AddEmployeeParams addEmployeeParams) async {
     emit(AddEmployeePageLoading());
     var res = await _addEmployeeUseCase(addEmployeeParams);
     if (res) {

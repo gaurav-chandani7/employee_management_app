@@ -18,5 +18,3 @@ class AddEmployeeParams {
     return 'AddEmployeeParams(employeeName: $employeeName, role: $role, startDate: $startDate, endDate: $endDate)';
   }
 }
-
-extension AddEmployeeParamsObject on AddEmployeeParams {}
