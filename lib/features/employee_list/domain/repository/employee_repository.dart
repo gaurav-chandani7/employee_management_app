@@ -1,4 +1,3 @@
-import 'package:employee_management_app/features/employee_list/domain/entities/add_employee_params.dart';
 import 'package:employee_management_app/features/employee_list/domain/entities/entities.dart';
 
 abstract class EmployeeRepository {

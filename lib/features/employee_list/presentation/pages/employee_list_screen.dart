@@ -1,6 +1,6 @@
-import 'package:employee_management_app/core/widgets/parent.dart';
+import 'package:employee_management_app/core/widgets/widgets.dart';
 import 'package:employee_management_app/dependencies_injection.dart';
-import 'package:employee_management_app/features/employee_list/presentation/bloc/employee_list_page/employee_list_page_bloc.dart';
+import 'package:employee_management_app/features/employee_list/presentation/view_model/view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

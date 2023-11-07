@@ -1,4 +1,3 @@
-import 'package:employee_management_app/features/employee_list/data/models/hive/employee_item_hive.dart';
 import 'package:employee_management_app/features/employee_list/data/models/models.dart';
 import 'package:hive/hive.dart';
 

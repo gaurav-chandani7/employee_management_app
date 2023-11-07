@@ -1,5 +1,5 @@
 import 'package:employee_management_app/core/usecase/usecase.dart';
-import 'package:employee_management_app/features/employee_list/domain/entities/add_employee_params.dart';
+import 'package:employee_management_app/features/employee_list/domain/entities/entities.dart';
 import 'package:employee_management_app/features/employee_list/domain/repository/repository.dart';
 
 class AddEmployeeUseCase extends UseCase<bool, AddEmployeeParams> {

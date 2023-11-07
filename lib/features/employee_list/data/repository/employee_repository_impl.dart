@@ -1,8 +1,5 @@
-import 'package:employee_management_app/features/employee_list/data/data_sources/local/app_database.dart';
-import 'package:employee_management_app/features/employee_list/data/models/hive/employee_item_hive.dart';
-import 'package:employee_management_app/features/employee_list/domain/entities/add_employee_params.dart';
-import 'package:employee_management_app/features/employee_list/domain/entities/employee_item.dart';
-import 'package:employee_management_app/features/employee_list/domain/repository/repository.dart';
+import 'package:employee_management_app/features/employee_list/data/data.dart';
+import 'package:employee_management_app/features/employee_list/domain/domain.dart';
 
 class EmployeeRepositoryImpl implements EmployeeRepository {
   final AppDatabase _appDatabase;

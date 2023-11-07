@@ -1,3 +1,1 @@
-abstract class UseCase<Type, Params> {
-  Future<Type> call(Params params);
-}
+export 'usecase_abstract.dart';
