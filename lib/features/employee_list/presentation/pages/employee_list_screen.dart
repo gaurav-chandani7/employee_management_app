@@ -1,4 +1,5 @@
 import 'package:collection/collection.dart';
+import 'package:employee_management_app/core/constants/constants.dart';
 import 'package:employee_management_app/core/widgets/widgets.dart';
 import 'package:employee_management_app/dependencies_injection.dart';
 import 'package:employee_management_app/features/employee_list/domain/entities/entities.dart';
@@ -38,11 +39,21 @@ class _EmployeeListScreenState extends State<EmployeeListScreen> {
                 floatingButton: FloatingActionButton(
                     onPressed: () => bloc
                         .add(NavigateToAddEmployeeScreen(context: context))),
-                child: _groupedList(data));
+                child: data.isEmpty ? _noRecordsUI() : _groupedList(data));
           }
           return const SizedBox();
         },
       ),
+    );
+  }
+
+  Widget _noRecordsUI() {
+    return Container(
+      color: noRecordsBackgroundColor,
+      alignment: Alignment.center,
+      child: Container(
+          constraints: const BoxConstraints(maxWidth: 260),
+          child: Image.asset(noRecordsImage)),
     );
   }
 

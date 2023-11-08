@@ -9,3 +9,4 @@ const Color whiteColor = Color(0xFFFFFFFF);
 const Color tertiaryColor = Color(0xFF949C9E);
 const Color textFieldColor = Color(0xFF323238);
 const Color textFieldBorderColor = Color(0xFFE5E5E5);
+const Color noRecordsBackgroundColor = Color(0xFFF2F2F2);
