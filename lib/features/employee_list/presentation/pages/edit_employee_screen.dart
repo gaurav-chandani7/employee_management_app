@@ -93,7 +93,11 @@ class _EditEmployeeScreenState extends State<EditEmployeeScreen> {
               });
             }
             if (state is ShowConfirmDeleteDialogEditPage) {
-              showConfirmDeleteAlertDialog(context);
+              showConfirmDeleteAlertDialog(context).then((value) {
+                if (value == true) {
+                  cubit.deleteOperation(editEmployeeParams.id);
+                }
+              });
             }
             if (state is EditEmployeePageLoading) {
               context.showLoading();

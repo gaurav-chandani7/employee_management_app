@@ -1,4 +1,3 @@
-import 'package:employee_management_app/features/employee_list/domain/usecases/edit_employee.dart';
 import 'package:employee_management_app/features/employee_list/employee_list.dart';
 import 'package:get_it/get_it.dart';
 import 'package:hive_flutter/hive_flutter.dart';
@@ -40,5 +39,5 @@ void _useCase() {
 void _bloc() {
   sl.registerFactory(() => EmployeeListPageBloc(sl(), sl()));
   sl.registerFactory(() => AddEmployeePageCubit(sl()));
-  sl.registerFactory(() => EditEmployeePageCubit(sl()));
+  sl.registerFactory(() => EditEmployeePageCubit(sl(), sl()));
 }

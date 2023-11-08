@@ -1,3 +1,4 @@
+import 'package:employee_management_app/core/constants/theme_constants.dart';
 import 'package:flutter/material.dart';
 
 Future<bool?> showConfirmDeleteAlertDialog(BuildContext context) {
@@ -7,8 +8,19 @@ Future<bool?> showConfirmDeleteAlertDialog(BuildContext context) {
             title: const Text("Confirm Delete"),
             content: const Text("Are you sure you want to delete this record?"),
             actions: [
-              ElevatedButton(onPressed: () {}, child: const Text("Cancel")),
-              ElevatedButton(onPressed: () {}, child: const Text("Delete"))
+              ElevatedButton(
+                  onPressed: () {
+                    Navigator.of(context).pop(false);
+                  },
+                  style: ElevatedButton.styleFrom(
+                      backgroundColor: primaryColor,
+                      foregroundColor: whiteColor),
+                  child: const Text("Cancel")),
+              ElevatedButton(
+                  onPressed: () {
+                    Navigator.of(context).pop(true);
+                  },
+                  child: const Text("Delete"))
             ],
           ));
 }

@@ -1,12 +1,12 @@
 import 'package:employee_management_app/features/employee_list/domain/entities/edit_employee_params.dart';
+import 'package:employee_management_app/features/employee_list/domain/usecases/usecases.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:employee_management_app/features/employee_list/domain/usecases/edit_employee.dart';
 import 'package:meta/meta.dart';
 
 part 'edit_employee_page_state.dart';
 
 class EditEmployeePageCubit extends Cubit<EditEmployeePageState> {
-  EditEmployeePageCubit(this._editEmployeeUseCase)
+  EditEmployeePageCubit(this._editEmployeeUseCase, this._deleteEmployeeUseCase)
       : super(EditEmployeePageInitial());
 
   showSelectRoleDialog() {
@@ -31,5 +31,13 @@ class EditEmployeePageCubit extends Cubit<EditEmployeePageState> {
     emit(EditEmployeePageSuccess());
   }
 
+  Future deleteOperation(int id) async {
+    emit(EditEmployeePageLoading());
+    await _deleteEmployeeUseCase(id);
+    emit(EditEmployeePageSuccess());
+    //Success state will tell UI to navigate back and update prev page
+  }
+
   final EditEmployeeUseCase _editEmployeeUseCase;
+  final DeleteEmployeeUseCase _deleteEmployeeUseCase;
 }
