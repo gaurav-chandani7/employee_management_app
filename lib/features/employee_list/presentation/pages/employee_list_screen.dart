@@ -78,9 +78,20 @@ class _EmployeeListScreenState extends State<EmployeeListScreen> {
         // Return a widget representing the category and its items
         return Column(
           children: [
-            Text(categoryName,
-                style: const TextStyle(fontWeight: FontWeight.bold)),
-            ListView.builder(
+            Container(
+              constraints: const BoxConstraints(maxHeight: 56),
+              color: headerBackgroundColor,
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              alignment: Alignment.centerLeft,
+              child: Text(categoryName,
+                  overflow: TextOverflow.ellipsis,
+                  maxLines: 1,
+                  style: const TextStyle(
+                      fontWeight: FontWeight.w500,
+                      color: primaryColor,
+                      fontSize: 16)),
+            ),
+            ListView.separated(
               shrinkWrap: true,
               physics: const ClampingScrollPhysics(),
               itemCount: itemsInCategory.length,
@@ -96,20 +107,51 @@ class _EmployeeListScreenState extends State<EmployeeListScreen> {
                     color: Colors.red,
                   ),
                   child: ListTile(
-                    isThreeLine: true,
+                    dense: true,
+                    minVerticalPadding: 0,
+                    contentPadding: const EdgeInsets.symmetric(
+                        horizontal: 16, vertical: 16),
                     title: Text(
                       item.name,
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 1,
+                      style: const TextStyle(
+                          fontWeight: FontWeight.w500,
+                          fontSize: 16,
+                          color: textFieldColor),
                     ),
                     subtitle: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(item.role.roleDisplayName),
+                        const SizedBox(
+                          height: 6,
+                        ),
+                        Text(
+                          item.role.roleDisplayName,
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 1,
+                          style: const TextStyle(
+                              color: tertiaryColor,
+                              fontSize: 14,
+                              fontWeight: FontWeight.w400),
+                        ),
+                        const SizedBox(
+                          height: 6,
+                        ),
                         Builder(builder: (context) {
                           var endDate = item.endDate;
                           String text = endDate != null
                               ? "${formatDate(item.startDate)} - ${formatDate(item.endDate!)}"
                               : "From ${formatDate(item.startDate)}";
-                          return Text(text);
+                          return Text(
+                            text,
+                            overflow: TextOverflow.ellipsis,
+                            maxLines: 1,
+                            style: const TextStyle(
+                                color: tertiaryColor,
+                                fontSize: 12,
+                                fontWeight: FontWeight.w400),
+                          );
                         })
                       ],
                     ),
@@ -118,6 +160,10 @@ class _EmployeeListScreenState extends State<EmployeeListScreen> {
                   ),
                 );
               },
+              separatorBuilder: (context, index) => const Divider(
+                height: 0,
+                color: borderColor,
+              ),
             ),
           ],
         );
