@@ -40,12 +40,14 @@ class _EditEmployeeScreenState extends State<EditEmployeeScreen> {
       create: (context) => cubit,
       child: Parent(
         appBar: AppBar(
+          title: const Text("Edit Employee Details"),
+          automaticallyImplyLeading: false,
           actions: [
-            ElevatedButton(
+            IconButton(
                 onPressed: () {
                   cubit.showConfirmDeleteDialog();
                 },
-                child: const Icon(Icons.delete))
+                icon: const ImageIcon(AssetImage(deleteIcon)))
           ],
         ),
         child: BlocListener<EditEmployeePageCubit, EditEmployeePageState>(

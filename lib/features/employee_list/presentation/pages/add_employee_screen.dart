@@ -28,6 +28,11 @@ class _AddEmployeeScreenState extends State<AddEmployeeScreen> {
     return BlocProvider(
       create: (context) => cubit,
       child: Parent(
+        avoidBottomInset: true,
+        appBar: AppBar(
+          title: const Text("Add Employee Details"),
+          automaticallyImplyLeading: false,
+        ),
         child: BlocListener<AddEmployeePageCubit, AddEmployeePageState>(
           bloc: cubit,
           listener: (context, state) {

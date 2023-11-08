@@ -37,6 +37,10 @@ class _EmployeeListScreenState extends State<EmployeeListScreen> {
                   title: const Text("Employee list"),
                 ),
                 floatingButton: FloatingActionButton(
+                    child: const Icon(
+                      Icons.add,
+                      size: 26,
+                    ),
                     onPressed: () => bloc
                         .add(NavigateToAddEmployeeScreen(context: context))),
                 child: data.isEmpty ? _noRecordsUI() : _groupedList(data));

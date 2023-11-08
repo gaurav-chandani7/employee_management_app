@@ -20,6 +20,7 @@ class MyApp extends StatelessWidget {
         child: MaterialApp(
             title: 'Employee Management app',
             routes: appRoutes,
+            debugShowCheckedModeBanner: false,
             theme: ThemeData(
                 colorScheme: ColorScheme.fromSeed(
                   seedColor: primaryColor,
@@ -29,11 +30,18 @@ class MyApp extends StatelessWidget {
                 appBarTheme: const AppBarTheme(
                     backgroundColor: primaryColor,
                     centerTitle: false,
+                    actionsIconTheme: IconThemeData(color: whiteColor),
                     titleTextStyle: TextStyle(
                         color: whiteColor,
                         fontWeight: FontWeight.w500,
                         fontSize: 18)),
                 scaffoldBackgroundColor: whiteColor,
+                floatingActionButtonTheme: const FloatingActionButtonThemeData(
+                    elevation: 0,
+                    foregroundColor: whiteColor,
+                    backgroundColor: primaryColor,
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(8)))),
                 elevatedButtonTheme: ElevatedButtonThemeData(
                     style: ElevatedButton.styleFrom(
                         backgroundColor: buttonBackgroundColor,
