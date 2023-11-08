@@ -39,6 +39,15 @@ class _EditEmployeeScreenState extends State<EditEmployeeScreen> {
     return BlocProvider(
       create: (context) => cubit,
       child: Parent(
+        appBar: AppBar(
+          actions: [
+            ElevatedButton(
+                onPressed: () {
+                  cubit.showConfirmDeleteDialog();
+                },
+                child: const Icon(Icons.delete))
+          ],
+        ),
         child: BlocListener<EditEmployeePageCubit, EditEmployeePageState>(
           listener: (context, state) {
             if (state is ShowRoleDialogEditPage) {
@@ -59,6 +68,9 @@ class _EditEmployeeScreenState extends State<EditEmployeeScreen> {
                   startDateController.text = formatDate(value);
                 }
               });
+            }
+            if (state is ShowConfirmDeleteDialogEditPage) {
+              showConfirmDeleteAlertDialog(context);
             }
             if (state is EditEmployeePageLoading) {
               context.showLoading();

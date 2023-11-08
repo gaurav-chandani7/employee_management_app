@@ -17,6 +17,10 @@ class EditEmployeePageCubit extends Cubit<EditEmployeePageState> {
     emit(ShowStartDateDialogEditPage());
   }
 
+  showConfirmDeleteDialog() {
+    emit(ShowConfirmDeleteDialogEditPage());
+  }
+
   editOperation(EditEmployeeParams editEmployeeParams) async {
     emit(EditEmployeePageLoading());
     await _editEmployeeUseCase(editEmployeeParams);

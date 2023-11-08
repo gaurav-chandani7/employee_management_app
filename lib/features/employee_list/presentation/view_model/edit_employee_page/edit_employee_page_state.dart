@@ -13,4 +13,4 @@ final class ShowRoleDialogEditPage extends EditEmployeePageInitial {}
 
 final class ShowStartDateDialogEditPage extends EditEmployeePageInitial {}
 
-
+final class ShowConfirmDeleteDialogEditPage extends EditEmployeePageInitial {}
