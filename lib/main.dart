@@ -52,6 +52,10 @@ class MyApp extends StatelessWidget {
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(6)))),
                 iconTheme: const IconThemeData(color: primaryColor),
+                bottomSheetTheme: const BottomSheetThemeData(
+                    backgroundColor: whiteColor,
+                    modalBackgroundColor: whiteColor,
+                    modalBarrierColor: barrierColor),
                 inputDecorationTheme: const InputDecorationTheme(
                     contentPadding: EdgeInsets.zero,
                     hintStyle: TextStyle(
