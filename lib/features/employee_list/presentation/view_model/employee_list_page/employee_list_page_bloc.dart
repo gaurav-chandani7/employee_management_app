@@ -15,8 +15,18 @@ class EmployeeListPageBloc
     on<FetchEmployeeList>((event, emit) async {
       emit(EmployeeListPageLoading());
       var list = await _getEmployeeListUseCase(null);
+      DateTime now = DateTime.now();
+      list.sort((a, b) {
+        if (b.startDate.compareTo(a.startDate) == 0) {
+          // In case of same start date, comparing with end date
+          return (b.endDate ?? now).compareTo(a.endDate ?? now);
+        }
+        //Latest date will appear first
+        return b.startDate.compareTo(a.startDate);
+      });
       emit(EmployeeListPageSuccess(data: list));
     });
+
     on<NavigateToAddEmployeeScreen>((event, emit) async {
       var pageRes =
           await Navigator.of(event.context).pushNamed(Routes.addEmployee.path);
@@ -25,11 +35,13 @@ class EmployeeListPageBloc
         add(FetchEmployeeList());
       }
     });
+
     on<DeleteEmployeeRecordEvent>((event, emit) async {
       await _deleteEmployeeUseCase(event.id);
       //Refresh data after entry is deleted
       add(FetchEmployeeList());
     });
+
     on<NavigateToEditEmployeeScreen>((event, emit) async {
       var pageRes = await Navigator.of(event.context)
           .pushNamed(Routes.editEmployee.path, arguments: event.employeeItem);
