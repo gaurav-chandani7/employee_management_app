@@ -17,6 +17,10 @@ class EditEmployeePageCubit extends Cubit<EditEmployeePageState> {
     emit(ShowStartDateDialogEditPage());
   }
 
+  showEndDateDialog() {
+    emit(ShowEndDateDialogEditPage());
+  }
+
   showConfirmDeleteDialog() {
     emit(ShowConfirmDeleteDialogEditPage());
   }

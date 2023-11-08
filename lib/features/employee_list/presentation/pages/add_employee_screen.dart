@@ -85,88 +85,7 @@ class _AddEmployeeScreenState extends State<AddEmployeeScreen> {
             key: _formKey,
             child: Stack(
               children: [
-                Padding(
-                  padding: const EdgeInsets.all(16),
-                  child: Column(
-                    children: [
-                      CommonTextField(
-                        onSaved: (val) {
-                          if (val != null) {
-                            addEmployeeParams.employeeName = val;
-                          }
-                        },
-                        hintText: "Employee name",
-                        prefixIcon: const ImageIcon(
-                          AssetImage(asset_constants.employeeNameIcon),
-                          size: 18,
-                        ),
-                        validator: (val) => requiredValidator(val, "Name"),
-                      ),
-                      const SizedBox(
-                        height: 23,
-                      ),
-                      CommonTextField(
-                        hintText: "Select role",
-                        prefixIcon: const ImageIcon(
-                          AssetImage(asset_constants.roleIcon),
-                          size: 20,
-                        ),
-                        suffixIcon: const Icon(Icons.arrow_drop_down),
-                        readOnly: true,
-                        controller: roleController,
-                        onTap: () => cubit.showSelectRoleDialog(),
-                        validator: (val) => requiredValidator(val, "Role"),
-                      ),
-                      const SizedBox(
-                        height: 23,
-                      ),
-                      Row(
-                        children: [
-                          Expanded(
-                            flex: 172,
-                            child: CommonTextField(
-                              onTap: () => cubit.showStartDateDialog(),
-                              prefixIcon: const ImageIcon(
-                                AssetImage(asset_constants.dateIcon),
-                                size: 20,
-                              ),
-                              readOnly: true,
-                              hintText: "No date",
-                              controller: startDateController,
-                              validator: (val) =>
-                                  requiredValidator(val, "Date"),
-                            ),
-                          ),
-                          Expanded(
-                              flex: 52,
-                              child: Container(
-                                padding:
-                                    const EdgeInsets.symmetric(horizontal: 16),
-                                child: const ImageIcon(
-                                    AssetImage(asset_constants.rightArrowIcon)),
-                              )),
-                          Expanded(
-                            flex: 172,
-                            child: CommonTextField(
-                              onTap: () {
-                                cubit.showEndDateDialog();
-                              },
-                              prefixIcon: const ImageIcon(
-                                AssetImage(
-                                  asset_constants.dateIcon,
-                                ),
-                                size: 20,
-                              ),
-                              readOnly: true,
-                              hintText: "No date",
-                              controller: endDateController,
-                            ),
-                          )
-                        ],
-                      )
-                    ],
-                  ),
-                ),
+                _topTextFieldSectionUI(),
                 BottomButtonSection(
                     cancelOnPressed: () => Navigator.of(context).pop(),
                     saveOnPressed: () {
@@ -179,6 +98,89 @@ class _AddEmployeeScreenState extends State<AddEmployeeScreen> {
             ),
           ),
         ),
+      ),
+    );
+  }
+
+  Widget _topTextFieldSectionUI() {
+    return Padding(
+      padding: const EdgeInsets.all(16),
+      child: Column(
+        children: [
+          CommonTextField(
+            onSaved: (val) {
+              if (val != null) {
+                addEmployeeParams.employeeName = val;
+              }
+            },
+            hintText: "Employee name",
+            prefixIcon: const ImageIcon(
+              AssetImage(asset_constants.employeeNameIcon),
+              size: 18,
+            ),
+            validator: (val) => requiredValidator(val, "Name"),
+          ),
+          const SizedBox(
+            height: 23,
+          ),
+          CommonTextField(
+            hintText: "Select role",
+            prefixIcon: const ImageIcon(
+              AssetImage(asset_constants.roleIcon),
+              size: 20,
+            ),
+            suffixIcon: const Icon(Icons.arrow_drop_down),
+            readOnly: true,
+            controller: roleController,
+            onTap: () => cubit.showSelectRoleDialog(),
+            validator: (val) => requiredValidator(val, "Role"),
+          ),
+          const SizedBox(
+            height: 23,
+          ),
+          Row(
+            children: [
+              Expanded(
+                flex: 172,
+                child: CommonTextField(
+                  onTap: () => cubit.showStartDateDialog(),
+                  prefixIcon: const ImageIcon(
+                    AssetImage(asset_constants.dateIcon),
+                    size: 20,
+                  ),
+                  readOnly: true,
+                  hintText: "No date",
+                  controller: startDateController,
+                  validator: (val) => requiredValidator(val, "Date"),
+                ),
+              ),
+              Expanded(
+                  flex: 52,
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 16),
+                    child: const ImageIcon(
+                        AssetImage(asset_constants.rightArrowIcon)),
+                  )),
+              Expanded(
+                flex: 172,
+                child: CommonTextField(
+                  onTap: () {
+                    cubit.showEndDateDialog();
+                  },
+                  prefixIcon: const ImageIcon(
+                    AssetImage(
+                      asset_constants.dateIcon,
+                    ),
+                    size: 20,
+                  ),
+                  readOnly: true,
+                  hintText: "No date",
+                  controller: endDateController,
+                ),
+              )
+            ],
+          )
+        ],
       ),
     );
   }

@@ -32,6 +32,10 @@ class _EditEmployeeScreenState extends State<EditEmployeeScreen> {
         startDate: widget.employeeItem.startDate,
         endDate: widget.employeeItem.endDate);
     roleController.text = editEmployeeParams.role.roleDisplayName;
+    startDateController.text = formatDate(editEmployeeParams.startDate);
+    if (editEmployeeParams.endDate != null) {
+      endDateController.text = formatDate(editEmployeeParams.endDate!);
+    }
   }
 
   @override
@@ -39,6 +43,7 @@ class _EditEmployeeScreenState extends State<EditEmployeeScreen> {
     return BlocProvider(
       create: (context) => cubit,
       child: Parent(
+        avoidBottomInset: true,
         appBar: AppBar(
           title: const Text("Edit Employee Details"),
           automaticallyImplyLeading: false,
@@ -61,13 +66,29 @@ class _EditEmployeeScreenState extends State<EditEmployeeScreen> {
               });
             }
             if (state is ShowStartDateDialogEditPage) {
-              showStartDateDialog(
+              showCustomDateDialog(
                       context: context,
-                      preSelectedDate: editEmployeeParams.startDate)
+                      preSelectedDay: editEmployeeParams.startDate)
                   .then((value) {
-                if (value != null) {
-                  editEmployeeParams.startDate = value;
-                  startDateController.text = formatDate(value);
+                if (value != null &&
+                    value.dateTime != null &&
+                    value.dateDialogAction == DateDialogActionEnum.save) {
+                  editEmployeeParams.startDate = value.dateTime!;
+                  startDateController.text = formatDate(value.dateTime!);
+                }
+              });
+            }
+            if (state is ShowEndDateDialogEditPage) {
+              showCustomDateDialog(
+                      context: context,
+                      showNoDateButton: true,
+                      preSelectedDay: editEmployeeParams.endDate)
+                  .then((value) {
+                if (value != null &&
+                    value.dateDialogAction == DateDialogActionEnum.save) {
+                  editEmployeeParams.endDate = value.dateTime;
+                  endDateController.text =
+                      value.dateTime != null ? formatDate(value.dateTime!) : "";
                 }
               });
             }
@@ -86,29 +107,7 @@ class _EditEmployeeScreenState extends State<EditEmployeeScreen> {
             key: _formKey,
             child: Stack(
               children: [
-                Column(
-                  children: [
-                    CommonTextField(
-                      initialValue: editEmployeeParams.employeeName,
-                      onSaved: (val) {
-                        if (val != null) {
-                          editEmployeeParams.employeeName = val;
-                        }
-                      },
-                      hintText: "Employee name",
-                      prefixIcon: const Icon(Icons.person_2_outlined),
-                      validator: (val) => requiredValidator(val, "Name"),
-                    ),
-                    CommonTextField(
-                      hintText: "Select role",
-                      prefixIcon: const Icon(Icons.luggage),
-                      readOnly: true,
-                      controller: roleController,
-                      onTap: () => cubit.showSelectRoleDialog(),
-                      validator: (val) => requiredValidator(val, "Role"),
-                    ),
-                  ],
-                ),
+                _topTextFieldUI(),
                 BottomButtonSection(
                     cancelOnPressed: () => Navigator.of(context).pop(),
                     saveOnPressed: () {
@@ -121,6 +120,89 @@ class _EditEmployeeScreenState extends State<EditEmployeeScreen> {
             ),
           ),
         ),
+      ),
+    );
+  }
+
+  Padding _topTextFieldUI() {
+    return Padding(
+      padding: const EdgeInsets.all(16),
+      child: Column(
+        children: [
+          CommonTextField(
+            initialValue: editEmployeeParams.employeeName,
+            onSaved: (val) {
+              if (val != null) {
+                editEmployeeParams.employeeName = val;
+              }
+            },
+            hintText: "Employee name",
+            prefixIcon: const ImageIcon(
+              AssetImage(employeeNameIcon),
+              size: 18,
+            ),
+            validator: (val) => requiredValidator(val, "Name"),
+          ),
+          const SizedBox(
+            height: 23,
+          ),
+          CommonTextField(
+            hintText: "Select role",
+            prefixIcon: const ImageIcon(
+              AssetImage(roleIcon),
+              size: 20,
+            ),
+            suffixIcon: const Icon(Icons.arrow_drop_down),
+            readOnly: true,
+            controller: roleController,
+            onTap: () => cubit.showSelectRoleDialog(),
+            validator: (val) => requiredValidator(val, "Role"),
+          ),
+          const SizedBox(
+            height: 23,
+          ),
+          Row(
+            children: [
+              Expanded(
+                flex: 172,
+                child: CommonTextField(
+                  onTap: () => cubit.showStartDateDialog(),
+                  prefixIcon: const ImageIcon(
+                    AssetImage(dateIcon),
+                    size: 20,
+                  ),
+                  readOnly: true,
+                  hintText: "No date",
+                  controller: startDateController,
+                  validator: (val) => requiredValidator(val, "Date"),
+                ),
+              ),
+              Expanded(
+                  flex: 52,
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 16),
+                    child: const ImageIcon(AssetImage(rightArrowIcon)),
+                  )),
+              Expanded(
+                flex: 172,
+                child: CommonTextField(
+                  onTap: () {
+                    cubit.showEndDateDialog();
+                  },
+                  prefixIcon: const ImageIcon(
+                    AssetImage(
+                      dateIcon,
+                    ),
+                    size: 20,
+                  ),
+                  readOnly: true,
+                  hintText: "No date",
+                  controller: endDateController,
+                ),
+              )
+            ],
+          )
+        ],
       ),
     );
   }
