@@ -16,7 +16,7 @@ class EmployeeRepositoryImpl implements EmployeeRepository {
             name: addEmployeeData.employeeName ?? "",
             role: addEmployeeData.role!.employeeRoleHive,
             startDate: addEmployeeData.startDate!,
-            endDate: addEmployeeData.endDate)) >
+            endDate: addEmployeeData.endDate)) >=
         0;
   }
 
