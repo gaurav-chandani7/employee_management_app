@@ -1,7 +1,9 @@
+import 'package:employee_management_app/core/constants/constants.dart';
 import 'package:flutter/material.dart';
 
 class BottomButtonSection extends StatelessWidget {
-  const BottomButtonSection({super.key, required this.cancelOnPressed, required this.saveOnPressed});
+  const BottomButtonSection(
+      {super.key, required this.cancelOnPressed, required this.saveOnPressed});
   final void Function()? cancelOnPressed;
   final void Function()? saveOnPressed;
 
@@ -12,19 +14,23 @@ class BottomButtonSection extends StatelessWidget {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          const Divider(),
+          const Divider(
+            height: 2,
+            color: borderColor,
+          ),
+          const SizedBox(
+            height: 10,
+          ),
           Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
               ElevatedButton(
-                  onPressed: cancelOnPressed,
-                  child: const Text("Cancel")),
+                  onPressed: cancelOnPressed, child: const Text("Cancel")),
               const SizedBox(
                 width: 10,
               ),
               ElevatedButton(
-                  onPressed: saveOnPressed,
-                  child: const Text("Save")),
+                  onPressed: saveOnPressed, child: const Text("Save")),
               const SizedBox(
                 width: 10,
               ),

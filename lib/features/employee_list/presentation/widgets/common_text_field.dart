@@ -1,3 +1,4 @@
+import 'package:employee_management_app/core/constants/constants.dart';
 import 'package:flutter/material.dart';
 
 class CommonTextField extends StatelessWidget {
@@ -10,9 +11,11 @@ class CommonTextField extends StatelessWidget {
       this.onTap,
       this.readOnly = false,
       this.controller,
-      this.initialValue});
+      this.initialValue,
+      this.suffixIcon});
   final String? hintText;
   final Widget? prefixIcon;
+  final Widget? suffixIcon;
   final void Function(String?)? onSaved;
   final String? Function(String?)? validator;
   final void Function()? onTap;
@@ -29,10 +32,19 @@ class CommonTextField extends StatelessWidget {
       readOnly: readOnly,
       controller: controller,
       initialValue: initialValue,
+      style: Theme.of(context).textTheme.titleMedium,
       decoration: InputDecoration(
-        hintText: hintText,
-        prefixIcon: prefixIcon,
-      ),
+          hintText: hintText,
+          prefixIcon: Container(
+              constraints: const BoxConstraints(
+                  maxWidth: 30, maxHeight: 30, minWidth: 20, minHeight: 20),
+              alignment: Alignment.center,
+              child: prefixIcon),
+          prefixIconColor: primaryColor,
+          // prefixIconConstraints:
+          //     const BoxConstraints(maxWidth: 30, maxHeight: 30),
+          suffixIcon: suffixIcon,
+          suffixIconColor: primaryColor),
     );
   }
 }

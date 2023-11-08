@@ -25,4 +25,8 @@ class AddEmployeePageCubit extends Cubit<AddEmployeePageState> {
   showStartDateDialog() {
     emit(ShowStartDateDialog());
   }
+
+  showEndDateDialog() {
+    emit(ShowEndDateDialog());
+  }
 }

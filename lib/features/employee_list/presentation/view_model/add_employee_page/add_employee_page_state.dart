@@ -12,3 +12,5 @@ final class AddEmployeePageSuccess extends AddEmployeePageState {}
 final class ShowSelectRoleDialog extends AddEmployeePageInitial {}
 
 final class ShowStartDateDialog extends AddEmployeePageInitial {}
+
+final class ShowEndDateDialog extends AddEmployeePageInitial {}
