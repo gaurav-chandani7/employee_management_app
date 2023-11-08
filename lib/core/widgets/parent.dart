@@ -12,7 +12,9 @@ class Parent extends StatelessWidget {
       this.endDrawer,
       this.backgroundColor,
       this.scaffoldKey,
-      this.extendBodyBehindAppBar = false});
+      this.extendBodyBehindAppBar = false,
+      this.bottomSafeArea = true,
+      this.topSafeArea = true});
   final Widget? child;
   final PreferredSizeWidget? appBar;
   final bool avoidBottomInset;
@@ -23,6 +25,8 @@ class Parent extends StatelessWidget {
   final Color? backgroundColor;
   final Key? scaffoldKey;
   final bool extendBodyBehindAppBar;
+  final bool bottomSafeArea;
+  final bool topSafeArea;
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +38,10 @@ class Parent extends StatelessWidget {
           resizeToAvoidBottomInset: avoidBottomInset,
           extendBodyBehindAppBar: extendBodyBehindAppBar,
           appBar: appBar,
-          body: SafeArea(child: child ?? const SizedBox()),
+          body: SafeArea(
+              bottom: bottomSafeArea,
+              top: topSafeArea,
+              child: child ?? const SizedBox()),
           drawer: drawer,
           endDrawer: endDrawer,
           floatingActionButton: floatingButton,
