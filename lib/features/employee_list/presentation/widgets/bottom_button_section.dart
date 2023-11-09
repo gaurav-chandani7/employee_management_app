@@ -30,7 +30,11 @@ class BottomButtonSection extends StatelessWidget {
                 width: 10,
               ),
               ElevatedButton(
-                  onPressed: saveOnPressed, child: const Text("Save")),
+                  onPressed: saveOnPressed,
+                  style: ElevatedButton.styleFrom(
+                      backgroundColor: primaryColor,
+                      foregroundColor: whiteColor),
+                  child: const Text("Save")),
               const SizedBox(
                 width: 10,
               ),
