@@ -40,122 +40,170 @@ class _CalendarDialogWidgetState extends State<CalendarDialogWidget> {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
+            const SizedBox(
+              height: 8,
+            ),
             widget.showNoDateButton
                 ? _endDateActionsUI()
                 : _startDateActionsUI(),
-            TableCalendar(
-              currentDay: DateTime.now(),
-              focusedDay: selectedDate ?? DateTime.now(),
-              selectedDayPredicate: (day) => isSameDay(day, selectedDate),
-              firstDay: DateTime(2000),
-              lastDay: DateTime.now().add(const Duration(days: 365)),
-              rowHeight: 45,
-              calendarBuilders: CalendarBuilders(
-                headerTitleBuilder: (context, day) => Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    IconButton(
-                        onPressed: () {
-                          tableController.previousPage(
-                              duration: widget.pageAnimationDuration,
-                              curve: widget.pageAnimationCurve);
-                        },
-                        icon: const Icon(
-                          Icons.arrow_left_rounded,
-                          color: tertiaryColor,
-                        )),
-                    Text(
-                      "${monthNames[day.month - 1]} ${day.year}",
-                      style: const TextStyle(
-                          fontWeight: FontWeight.w500, fontSize: 18),
-                    ),
-                    IconButton(
-                        onPressed: () {
-                          tableController.nextPage(
-                              duration: widget.pageAnimationDuration,
-                              curve: widget.pageAnimationCurve);
-                        },
-                        icon: const Icon(
-                          Icons.arrow_right,
-                          color: tertiaryColor,
-                        )),
-                  ],
-                ),
+            Container(
+              constraints: const BoxConstraints(
+                maxHeight: (45 * 6) + 20 + 16 + 70,
               ),
-              headerStyle: const HeaderStyle(
-                  formatButtonVisible: false,
-                  titleCentered: true,
-                  leftChevronVisible: false,
-                  rightChevronVisible: false),
-              calendarStyle: const CalendarStyle(
-                  outsideDaysVisible: false,
-                  todayTextStyle: TextStyle(color: primaryColor),
-                  todayDecoration: BoxDecoration(
-                      color: whiteColor,
+              child: TableCalendar(
+                currentDay: DateTime.now(),
+                focusedDay: selectedDate ?? DateTime.now(),
+                selectedDayPredicate: (day) => isSameDay(day, selectedDate),
+                firstDay: DateTime(2000),
+                lastDay: DateTime.now().add(const Duration(days: 365)),
+                rowHeight: 45,
+                daysOfWeekHeight: 20,
+                daysOfWeekStyle: const DaysOfWeekStyle(
+                    weekdayStyle: TextStyle(
+                        fontWeight: FontWeight.w400,
+                        fontSize: 15,
+                        color: textFieldColor),
+                    weekendStyle: TextStyle(
+                        fontWeight: FontWeight.w400,
+                        fontSize: 15,
+                        color: textFieldColor)),
+                calendarBuilders: CalendarBuilders(
+                  headerTitleBuilder: (context, day) => Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      IconButton(
+                          visualDensity: VisualDensity.compact,
+                          onPressed: () {
+                            tableController.previousPage(
+                                duration: widget.pageAnimationDuration,
+                                curve: widget.pageAnimationCurve);
+                          },
+                          icon: const ImageIcon(
+                            AssetImage(leftArrowCalendarIcon),
+                            size: 14,
+                            color: tertiaryColor,
+                          )),
+                      Container(
+                        width: 155,
+                        alignment: Alignment.center,
+                        child: Text(
+                          "${monthNames[day.month - 1]} ${day.year}",
+                          style: const TextStyle(
+                              fontWeight: FontWeight.w500, fontSize: 18),
+                        ),
+                      ),
+                      IconButton(
+                          visualDensity: VisualDensity.compact,
+                          onPressed: () {
+                            tableController.nextPage(
+                                duration: widget.pageAnimationDuration,
+                                curve: widget.pageAnimationCurve);
+                          },
+                          icon: const ImageIcon(
+                            AssetImage(rightArrowCalendarIcon),
+                            size: 14,
+                            color: tertiaryColor,
+                          )),
+                    ],
+                  ),
+                ),
+                headerStyle: const HeaderStyle(
+                    formatButtonVisible: false,
+                    titleCentered: true,
+                    leftChevronVisible: false,
+                    rightChevronVisible: false),
+                calendarStyle: const CalendarStyle(
+                    tablePadding: EdgeInsets.symmetric(vertical: 8),
+                    defaultTextStyle: TextStyle(
+                        fontWeight: FontWeight.w400,
+                        fontSize: 15,
+                        color: textFieldColor),
+                    weekendTextStyle: TextStyle(
+                        fontWeight: FontWeight.w400,
+                        fontSize: 15,
+                        color: textFieldColor),
+                    outsideDaysVisible: false,
+                    todayTextStyle: TextStyle(color: primaryColor),
+                    todayDecoration: BoxDecoration(
+                        color: whiteColor,
+                        shape: BoxShape.circle,
+                        border: Border.fromBorderSide(
+                            BorderSide(color: primaryColor))),
+                    selectedTextStyle: TextStyle(color: whiteColor),
+                    selectedDecoration: BoxDecoration(
+                      color: primaryColor,
                       shape: BoxShape.circle,
-                      border: Border.fromBorderSide(
-                          BorderSide(color: primaryColor))),
-                  selectedTextStyle: TextStyle(color: whiteColor),
-                  selectedDecoration: BoxDecoration(
-                    color: primaryColor,
-                    shape: BoxShape.circle,
-                  )),
-              onCalendarCreated: (pageController) {
-                tableController = pageController;
-              },
-              onDaySelected: (selectedD, fD) {
-                setState(() {
-                  selectedDate = selectedD;
-                });
-              },
+                    )),
+                onCalendarCreated: (pageController) {
+                  tableController = pageController;
+                },
+                onDaySelected: (selectedD, fD) {
+                  setState(() {
+                    selectedDate = selectedD;
+                  });
+                },
+              ),
             ),
             const Divider(
-              height: 2,
+              height: 0,
               color: borderColor,
             ),
             const SizedBox(
-              height: 10,
+              height: 16,
             ),
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Row(
-                  children: [
-                    const ImageIcon(AssetImage(dateIcon)),
-                    const SizedBox(
-                      width: 2,
-                    ),
-                    Text(selectedDate != null
-                        ? formatDate(selectedDate!)
-                        : "No date"),
-                  ],
+                Expanded(
+                  child: Row(
+                    children: [
+                      const ImageIcon(AssetImage(dateIcon)),
+                      const SizedBox(
+                        width: 10,
+                      ),
+                      Text(
+                        selectedDate != null
+                            ? formatDate(selectedDate!)
+                            : "No date",
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: 1,
+                        style: const TextStyle(
+                            fontWeight: FontWeight.w400,
+                            fontSize: 16,
+                            color: textFieldColor),
+                      ),
+                    ],
+                  ),
                 ),
-                Row(
-                  children: [
-                    Row(
-                      children: [
-                        ElevatedButton(
-                            onPressed: () => Navigator.of(context).pop(
-                                DateDialogPopObject(
-                                    dateDialogAction:
-                                        DateDialogActionEnum.cancel)),
-                            child: const Text("Cancel")),
-                        const SizedBox(
-                          width: 16,
-                        ),
-                        ElevatedButton(
-                            onPressed: () {
-                              Navigator.of(context).pop(DateDialogPopObject(
-                                  dateDialogAction: DateDialogActionEnum.save,
-                                  dateTime: selectedDate));
-                            },
-                            style: ElevatedButton.styleFrom(
-                                backgroundColor: primaryColor,
-                                foregroundColor: whiteColor),
-                            child: const Text("Save"))
-                      ],
-                    ),
-                  ],
+                Expanded(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      ElevatedButton(
+                          onPressed: () => Navigator.of(context).pop(
+                              DateDialogPopObject(
+                                  dateDialogAction:
+                                      DateDialogActionEnum.cancel)),
+                          style: ElevatedButton.styleFrom(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 12)),
+                          child: const Text("Cancel")),
+                      const SizedBox(
+                        width: 16,
+                      ),
+                      ElevatedButton(
+                          onPressed: () {
+                            Navigator.of(context).pop(DateDialogPopObject(
+                                dateDialogAction: DateDialogActionEnum.save,
+                                dateTime: selectedDate));
+                          },
+                          style: ElevatedButton.styleFrom(
+                              backgroundColor: primaryColor,
+                              foregroundColor: whiteColor,
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 12)),
+                          child: const Text("Save"))
+                    ],
+                  ),
                 )
               ],
             )
@@ -222,6 +270,7 @@ class _CalendarDialogWidgetState extends State<CalendarDialogWidget> {
   ElevatedButton _afterOneWeekButton() {
     return ElevatedButton(
         onPressed: () {
+          //1 week Relative to today
           setState(() {
             selectedDate = DateTime.now().add(const Duration(days: 7));
           });
@@ -233,6 +282,7 @@ class _CalendarDialogWidgetState extends State<CalendarDialogWidget> {
     return ElevatedButton(
         onPressed: () {
           DateTime date = DateTime.now();
+          //next tuesday Relative to today
           do {
             date = date.add(const Duration(days: 1));
           } while (date.weekday != DateTime.tuesday);
@@ -247,6 +297,7 @@ class _CalendarDialogWidgetState extends State<CalendarDialogWidget> {
     return ElevatedButton(
         onPressed: () {
           DateTime date = DateTime.now();
+          //next monday Relative to today
           do {
             date = date.add(const Duration(days: 1));
           } while (date.weekday != DateTime.monday);
