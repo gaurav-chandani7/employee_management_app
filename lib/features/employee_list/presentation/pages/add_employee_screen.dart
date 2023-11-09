@@ -182,6 +182,17 @@ class _AddEmployeeScreenState extends State<AddEmployeeScreen> {
                   readOnly: true,
                   hintText: "No date",
                   controller: endDateController,
+                  validator: (val) {
+                    if (addEmployeeParams.endDate != null &&
+                        addEmployeeParams.startDate != null) {
+                      var diff = compareTillDays(addEmployeeParams.endDate!,
+                          addEmployeeParams.startDate!);
+                      if (diff < 0) {
+                        return "Invalid end date";
+                      }
+                    }
+                    return null;
+                  },
                 ),
               )
             ],
