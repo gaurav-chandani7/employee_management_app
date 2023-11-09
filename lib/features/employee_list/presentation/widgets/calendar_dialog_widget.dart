@@ -45,7 +45,7 @@ class _CalendarDialogWidgetState extends State<CalendarDialogWidget> {
         child: SingleChildScrollView(
           // For Low Height devices
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
+            padding: const EdgeInsets.symmetric(vertical: 24),
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
@@ -59,6 +59,7 @@ class _CalendarDialogWidgetState extends State<CalendarDialogWidget> {
                   constraints: const BoxConstraints(
                     maxHeight: (45 * 6) + 20 + 16 + 70,
                   ),
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
                   child: TableCalendar(
                     currentDay: DateTime.now(),
                     focusedDay: selectedDate ?? DateTime.now(),
@@ -160,61 +161,65 @@ class _CalendarDialogWidgetState extends State<CalendarDialogWidget> {
                 const SizedBox(
                   height: 16,
                 ),
-                Row(
-                  children: [
-                    Expanded(
-                      child: Row(
-                        children: [
-                          const ImageIcon(AssetImage(dateIcon)),
-                          const SizedBox(
-                            width: 10,
-                          ),
-                          Text(
-                            selectedDate != null
-                                ? formatDate(selectedDate!)
-                                : "No date",
-                            overflow: TextOverflow.ellipsis,
-                            maxLines: 1,
-                            style: const TextStyle(
-                                fontWeight: FontWeight.w400,
-                                fontSize: 16,
-                                color: textFieldColor),
-                          ),
-                        ],
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: Row(
+                          children: [
+                            const ImageIcon(AssetImage(dateIcon)),
+                            const SizedBox(
+                              width: 10,
+                            ),
+                            Text(
+                              selectedDate != null
+                                  ? formatDate(selectedDate!)
+                                  : "No date",
+                              overflow: TextOverflow.ellipsis,
+                              maxLines: 1,
+                              style: const TextStyle(
+                                  fontWeight: FontWeight.w400,
+                                  fontSize: 16,
+                                  color: textFieldColor),
+                            ),
+                          ],
+                        ),
                       ),
-                    ),
-                    Expanded(
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          ElevatedButton(
-                              onPressed: () => Navigator.of(context).pop(
-                                  DateDialogPopObject(
+                      Expanded(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            ElevatedButton(
+                                onPressed: () => Navigator.of(context).pop(
+                                    DateDialogPopObject(
+                                        dateDialogAction:
+                                            DateDialogActionEnum.cancel)),
+                                style: ElevatedButton.styleFrom(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 12)),
+                                child: const Text("Cancel")),
+                            const SizedBox(
+                              width: 16,
+                            ),
+                            ElevatedButton(
+                                onPressed: () {
+                                  Navigator.of(context).pop(DateDialogPopObject(
                                       dateDialogAction:
-                                          DateDialogActionEnum.cancel)),
-                              style: ElevatedButton.styleFrom(
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 12)),
-                              child: const Text("Cancel")),
-                          const SizedBox(
-                            width: 16,
-                          ),
-                          ElevatedButton(
-                              onPressed: () {
-                                Navigator.of(context).pop(DateDialogPopObject(
-                                    dateDialogAction: DateDialogActionEnum.save,
-                                    dateTime: selectedDate));
-                              },
-                              style: ElevatedButton.styleFrom(
-                                  backgroundColor: primaryColor,
-                                  foregroundColor: whiteColor,
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 12)),
-                              child: const Text("Save"))
-                        ],
-                      ),
-                    )
-                  ],
+                                          DateDialogActionEnum.save,
+                                      dateTime: selectedDate));
+                                },
+                                style: ElevatedButton.styleFrom(
+                                    backgroundColor: primaryColor,
+                                    foregroundColor: whiteColor,
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 12)),
+                                child: const Text("Save"))
+                          ],
+                        ),
+                      )
+                    ],
+                  ),
                 )
               ],
             ),
@@ -224,58 +229,64 @@ class _CalendarDialogWidgetState extends State<CalendarDialogWidget> {
     });
   }
 
-  Column _startDateActionsUI() {
-    return Column(
-      children: [
-        Row(
-          children: [
-            Expanded(
-              flex: 47,
-              child: _todayButton(),
-            ),
-            const Expanded(flex: 6, child: SizedBox()),
-            Expanded(
-              flex: 47,
-              child: _nextMondayButton(),
-            )
-          ],
-        ),
-        const SizedBox(
-          height: 5,
-        ),
-        Row(
-          children: [
-            Expanded(
-              flex: 47,
-              child: _nextTuesdayButton(),
-            ),
-            const Expanded(flex: 6, child: SizedBox()),
-            Expanded(
-              flex: 47,
-              child: _afterOneWeekButton(),
-            )
-          ],
-        ),
-      ],
+  Widget _startDateActionsUI() {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16),
+      child: Column(
+        children: [
+          Row(
+            children: [
+              Expanded(
+                flex: 47,
+                child: _todayButton(),
+              ),
+              const Expanded(flex: 6, child: SizedBox()),
+              Expanded(
+                flex: 47,
+                child: _nextMondayButton(),
+              )
+            ],
+          ),
+          const SizedBox(
+            height: 5,
+          ),
+          Row(
+            children: [
+              Expanded(
+                flex: 47,
+                child: _nextTuesdayButton(),
+              ),
+              const Expanded(flex: 6, child: SizedBox()),
+              Expanded(
+                flex: 47,
+                child: _afterOneWeekButton(),
+              )
+            ],
+          ),
+        ],
+      ),
     );
   }
 
-  Column _endDateActionsUI() {
-    return Column(children: [
-      Row(
-        children: [
-          Expanded(
-            flex: 47,
-            child: _noDateButton(),
-          ),
-          const Expanded(flex: 6, child: SizedBox()),
-          Expanded(
-            flex: 47,
-            child: _todayButton(),
-          )
-        ],
-      ),
-    ]);
+  Widget _endDateActionsUI() {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16),
+      child: Column(children: [
+        Row(
+          children: [
+            Expanded(
+              flex: 47,
+              child: _noDateButton(),
+            ),
+            const Expanded(flex: 6, child: SizedBox()),
+            Expanded(
+              flex: 47,
+              child: _todayButton(),
+            )
+          ],
+        ),
+      ]),
+    );
   }
 
   ElevatedButton _afterOneWeekButton() {
