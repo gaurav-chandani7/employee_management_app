@@ -42,89 +42,94 @@ class _EditEmployeeScreenState extends State<EditEmployeeScreen> {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => cubit,
-      child: Parent(
-        avoidBottomInset: true,
-        appBar: AppBar(
-          title: const Text("Edit Employee Details"),
-          automaticallyImplyLeading: false,
-          actions: [
-            IconButton(
-                onPressed: () {
-                  cubit.showConfirmDeleteDialog();
-                },
-                icon: const ImageIcon(AssetImage(deleteIcon)))
-          ],
-        ),
-        child: BlocListener<EditEmployeePageCubit, EditEmployeePageState>(
-          listener: (context, state) {
-            if (state is ShowRoleDialogEditPage) {
-              showSelectRoleBottomModal(context).then((value) {
-                if (value != null) {
-                  roleController.text = value.roleDisplayName;
-                  editEmployeeParams.role = value;
-                }
-              });
-            }
-            if (state is ShowStartDateDialogEditPage) {
-              showCustomDateDialog(
-                      context: context,
-                      preSelectedDay: editEmployeeParams.startDate)
-                  .then((value) {
-                if (value != null &&
-                    value.dateTime != null &&
-                    value.dateDialogAction == DateDialogActionEnum.save) {
-                  editEmployeeParams.startDate = value.dateTime!;
-                  startDateController.text = formatDate(value.dateTime!);
-                }
-              });
-            }
-            if (state is ShowEndDateDialogEditPage) {
-              showCustomDateDialog(
-                      context: context,
-                      showNoDateButton: true,
-                      preSelectedDay: editEmployeeParams.endDate)
-                  .then((value) {
-                if (value != null &&
-                    value.dateDialogAction == DateDialogActionEnum.save) {
-                  editEmployeeParams.endDate = value.dateTime;
-                  endDateController.text =
-                      value.dateTime != null ? formatDate(value.dateTime!) : "";
-                }
-              });
-            }
-            if (state is ShowConfirmDeleteDialogEditPage) {
-              showConfirmDeleteAlertDialog(context).then((value) {
-                if (value == true) {
-                  cubit.deleteOperation(editEmployeeParams.id);
-                }
-              });
-            }
-            if (state is EditEmployeePageLoading) {
-              context.showLoading();
-            }
-            if (state is EditEmployeePageSuccess) {
-              context.dismiss();
-              Navigator.of(context).pop(true);
-            }
-          },
-          child: Form(
-            key: _formKey,
-            child: Stack(
-              children: [
-                _topTextFieldUI(),
-                BottomButtonSection(
-                    cancelOnPressed: () => Navigator.of(context).pop(),
-                    saveOnPressed: () {
-                      if (_formKey.currentState?.validate() ?? false) {
-                        _formKey.currentState?.save();
-                        cubit.editOperation(editEmployeeParams);
-                      }
-                    })
-              ],
+      child: LayoutBuilder(builder: (context, constraints) {
+        var maxHeight = constraints.maxHeight;
+        var keyboardHeight = MediaQuery.of(context).viewInsets.bottom;
+        return Parent(
+          avoidBottomInset: maxHeight > (keyboardHeight + 200),
+          appBar: AppBar(
+            title: const Text("Edit Employee Details"),
+            automaticallyImplyLeading: false,
+            actions: [
+              IconButton(
+                  onPressed: () {
+                    cubit.showConfirmDeleteDialog();
+                  },
+                  icon: const ImageIcon(AssetImage(deleteIcon)))
+            ],
+          ),
+          child: BlocListener<EditEmployeePageCubit, EditEmployeePageState>(
+            listener: (context, state) {
+              if (state is ShowRoleDialogEditPage) {
+                showSelectRoleBottomModal(context).then((value) {
+                  if (value != null) {
+                    roleController.text = value.roleDisplayName;
+                    editEmployeeParams.role = value;
+                  }
+                });
+              }
+              if (state is ShowStartDateDialogEditPage) {
+                showCustomDateDialog(
+                        context: context,
+                        preSelectedDay: editEmployeeParams.startDate)
+                    .then((value) {
+                  if (value != null &&
+                      value.dateTime != null &&
+                      value.dateDialogAction == DateDialogActionEnum.save) {
+                    editEmployeeParams.startDate = value.dateTime!;
+                    startDateController.text = formatDate(value.dateTime!);
+                  }
+                });
+              }
+              if (state is ShowEndDateDialogEditPage) {
+                showCustomDateDialog(
+                        context: context,
+                        showNoDateButton: true,
+                        preSelectedDay: editEmployeeParams.endDate)
+                    .then((value) {
+                  if (value != null &&
+                      value.dateDialogAction == DateDialogActionEnum.save) {
+                    editEmployeeParams.endDate = value.dateTime;
+                    endDateController.text = value.dateTime != null
+                        ? formatDate(value.dateTime!)
+                        : "";
+                  }
+                });
+              }
+              if (state is ShowConfirmDeleteDialogEditPage) {
+                showConfirmDeleteAlertDialog(context).then((value) {
+                  if (value == true) {
+                    cubit.deleteOperation(editEmployeeParams.id);
+                  }
+                });
+              }
+              if (state is EditEmployeePageLoading) {
+                context.showLoading();
+              }
+              if (state is EditEmployeePageSuccess) {
+                context.dismiss();
+                Navigator.of(context).pop(true);
+              }
+            },
+            child: Form(
+              key: _formKey,
+              child: Stack(
+                children: [
+                  _topTextFieldUI(),
+                  BottomButtonSection(
+                      cancelOnPressed: () => Navigator.of(context).pop(),
+                      saveOnPressed: () {
+                        if (_formKey.currentState?.validate() ?? false) {
+                          _formKey.currentState?.save();
+                          cubit.editOperation(editEmployeeParams);
+                        }
+                      })
+                ],
+              ),
             ),
           ),
-        ),
-      ),
+        );
+      }),
     );
   }
 
