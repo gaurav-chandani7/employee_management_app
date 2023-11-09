@@ -45,13 +45,10 @@ class _CalendarDialogWidgetState extends State<CalendarDialogWidget> {
         child: SingleChildScrollView(
           // For Low Height devices
           child: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 24),
+            padding: const EdgeInsets.only(top: 24, bottom: 16),
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                const SizedBox(
-                  height: 8,
-                ),
                 widget.showNoDateButton
                     ? _endDateActionsUI()
                     : _startDateActionsUI(),
@@ -248,7 +245,7 @@ class _CalendarDialogWidgetState extends State<CalendarDialogWidget> {
             ],
           ),
           const SizedBox(
-            height: 5,
+            height: 10,
           ),
           Row(
             children: [
