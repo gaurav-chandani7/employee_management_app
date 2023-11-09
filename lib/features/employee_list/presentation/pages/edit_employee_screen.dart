@@ -59,58 +59,7 @@ class _EditEmployeeScreenState extends State<EditEmployeeScreen> {
             ],
           ),
           child: BlocListener<EditEmployeePageCubit, EditEmployeePageState>(
-            listener: (context, state) {
-              if (state is ShowRoleDialogEditPage) {
-                showSelectRoleBottomModal(context).then((value) {
-                  if (value != null) {
-                    roleController.text = value.roleDisplayName;
-                    editEmployeeParams.role = value;
-                  }
-                });
-              }
-              if (state is ShowStartDateDialogEditPage) {
-                showCustomDateDialog(
-                        context: context,
-                        preSelectedDay: editEmployeeParams.startDate)
-                    .then((value) {
-                  if (value != null &&
-                      value.dateTime != null &&
-                      value.dateDialogAction == DateDialogActionEnum.save) {
-                    editEmployeeParams.startDate = value.dateTime!;
-                    startDateController.text = formatDate(value.dateTime!);
-                  }
-                });
-              }
-              if (state is ShowEndDateDialogEditPage) {
-                showCustomDateDialog(
-                        context: context,
-                        showNoDateButton: true,
-                        preSelectedDay: editEmployeeParams.endDate)
-                    .then((value) {
-                  if (value != null &&
-                      value.dateDialogAction == DateDialogActionEnum.save) {
-                    editEmployeeParams.endDate = value.dateTime;
-                    endDateController.text = value.dateTime != null
-                        ? formatDate(value.dateTime!)
-                        : "";
-                  }
-                });
-              }
-              if (state is ShowConfirmDeleteDialogEditPage) {
-                showConfirmDeleteAlertDialog(context).then((value) {
-                  if (value == true) {
-                    cubit.deleteOperation(editEmployeeParams.id);
-                  }
-                });
-              }
-              if (state is EditEmployeePageLoading) {
-                context.showLoading();
-              }
-              if (state is EditEmployeePageSuccess) {
-                context.dismiss();
-                Navigator.of(context).pop(true);
-              }
-            },
+            listener: _blocListenerEditPage,
             child: Form(
               key: _formKey,
               child: Stack(
@@ -131,6 +80,58 @@ class _EditEmployeeScreenState extends State<EditEmployeeScreen> {
         );
       }),
     );
+  }
+
+  void _blocListenerEditPage(
+      BuildContext context, EditEmployeePageState state) {
+    if (state is ShowRoleDialogEditPage) {
+      showSelectRoleBottomModal(context).then((value) {
+        if (value != null) {
+          roleController.text = value.roleDisplayName;
+          editEmployeeParams.role = value;
+        }
+      });
+    }
+    if (state is ShowStartDateDialogEditPage) {
+      showCustomDateDialog(
+              context: context, preSelectedDay: editEmployeeParams.startDate)
+          .then((value) {
+        if (value != null &&
+            value.dateTime != null &&
+            value.dateDialogAction == DateDialogActionEnum.save) {
+          editEmployeeParams.startDate = value.dateTime!;
+          startDateController.text = formatDate(value.dateTime!);
+        }
+      });
+    }
+    if (state is ShowEndDateDialogEditPage) {
+      showCustomDateDialog(
+              context: context,
+              showNoDateButton: true,
+              preSelectedDay: editEmployeeParams.endDate)
+          .then((value) {
+        if (value != null &&
+            value.dateDialogAction == DateDialogActionEnum.save) {
+          editEmployeeParams.endDate = value.dateTime;
+          endDateController.text =
+              value.dateTime != null ? formatDate(value.dateTime!) : "";
+        }
+      });
+    }
+    if (state is ShowConfirmDeleteDialogEditPage) {
+      showConfirmDeleteAlertDialog(context).then((value) {
+        if (value == true) {
+          cubit.deleteOperation(editEmployeeParams.id);
+        }
+      });
+    }
+    if (state is EditEmployeePageLoading) {
+      context.showLoading();
+    }
+    if (state is EditEmployeePageSuccess) {
+      context.dismiss();
+      Navigator.of(context).pop(true);
+    }
   }
 
   Padding _topTextFieldUI() {

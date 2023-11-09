@@ -38,53 +38,7 @@ class _AddEmployeeScreenState extends State<AddEmployeeScreen> {
           ),
           child: BlocListener<AddEmployeePageCubit, AddEmployeePageState>(
             bloc: cubit,
-            listener: (context, state) {
-              if (state is ShowSelectRoleDialog) {
-                showSelectRoleBottomModal(context).then((value) {
-                  if (value != null) {
-                    addEmployeeParams.role = value;
-                    roleController.text = value.roleDisplayName;
-                  }
-                });
-              }
-              if (state is ShowStartDateDialog) {
-                showCustomDateDialog(
-                        context: context,
-                        preSelectedDay: addEmployeeParams.startDate)
-                    .then((value) {
-                  if (value != null &&
-                      value.dateTime != null &&
-                      value.dateDialogAction == DateDialogActionEnum.save) {
-                    addEmployeeParams.startDate = value.dateTime;
-                    startDateController.text = formatDate(value.dateTime!);
-                  }
-                });
-              }
-              if (state is ShowEndDateDialog) {
-                showCustomDateDialog(
-                        context: context,
-                        showNoDateButton: true,
-                        preSelectedDay: addEmployeeParams.endDate)
-                    .then((value) {
-                  if (value != null &&
-                      value.dateDialogAction == DateDialogActionEnum.save) {
-                    addEmployeeParams.endDate = value.dateTime;
-                    endDateController.text = value.dateTime != null
-                        ? formatDate(value.dateTime!)
-                        : "";
-                  }
-                });
-              }
-              if (state is AddEmployeePageSuccess) {
-                //Dismiss Loader
-                context.dismiss();
-                //Sending true to previous page
-                Navigator.of(context).pop(true);
-              }
-              if (state is AddEmployeePageLoading) {
-                context.showLoading();
-              }
-            },
+            listener: _blocListenerAddPage,
             child: Form(
               key: _formKey,
               child: Stack(
@@ -105,6 +59,52 @@ class _AddEmployeeScreenState extends State<AddEmployeeScreen> {
         );
       }),
     );
+  }
+
+  void _blocListenerAddPage(BuildContext context, AddEmployeePageState state) {
+    if (state is ShowSelectRoleDialog) {
+      showSelectRoleBottomModal(context).then((value) {
+        if (value != null) {
+          addEmployeeParams.role = value;
+          roleController.text = value.roleDisplayName;
+        }
+      });
+    }
+    if (state is ShowStartDateDialog) {
+      showCustomDateDialog(
+              context: context, preSelectedDay: addEmployeeParams.startDate)
+          .then((value) {
+        if (value != null &&
+            value.dateTime != null &&
+            value.dateDialogAction == DateDialogActionEnum.save) {
+          addEmployeeParams.startDate = value.dateTime;
+          startDateController.text = formatDate(value.dateTime!);
+        }
+      });
+    }
+    if (state is ShowEndDateDialog) {
+      showCustomDateDialog(
+              context: context,
+              showNoDateButton: true,
+              preSelectedDay: addEmployeeParams.endDate)
+          .then((value) {
+        if (value != null &&
+            value.dateDialogAction == DateDialogActionEnum.save) {
+          addEmployeeParams.endDate = value.dateTime;
+          endDateController.text =
+              value.dateTime != null ? formatDate(value.dateTime!) : "";
+        }
+      });
+    }
+    if (state is AddEmployeePageSuccess) {
+      //Dismiss Loader
+      context.dismiss();
+      //Sending true to previous page
+      Navigator.of(context).pop(true);
+    }
+    if (state is AddEmployeePageLoading) {
+      context.showLoading();
+    }
   }
 
   Widget _topTextFieldSectionUI() {
