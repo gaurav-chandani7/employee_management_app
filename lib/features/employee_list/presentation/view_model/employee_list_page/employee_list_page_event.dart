@@ -24,3 +24,10 @@ class NavigateToEditEmployeeScreen extends EmployeeListPageEvent {
   NavigateToEditEmployeeScreen(
       {required this.context, required this.employeeItem});
 }
+
+class ItemDismissedEvent extends EmployeeListPageEvent {
+  final BuildContext context;
+  final EmployeeItemEntity item;
+
+  ItemDismissedEvent({required this.context, required this.item});
+}

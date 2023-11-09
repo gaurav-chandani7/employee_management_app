@@ -1,6 +1,7 @@
 import 'package:employee_management_app/core/constants/constants.dart';
 import 'package:employee_management_app/features/employee_list/domain/entities/entities.dart';
 import 'package:employee_management_app/features/employee_list/domain/usecases/usecases.dart';
+import 'package:employee_management_app/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -49,6 +50,24 @@ class EmployeeListPageBloc
         //Refresh data after record is updated
         add(FetchEmployeeList());
       }
+    });
+
+    on<ItemDismissedEvent>((event, emit) {
+      state.data?.remove(event.item);
+      emit(EmployeeListPageSuccess(data: state.data));
+      event.context
+          .showToast(
+        message: "Employee data has been deleted",
+        actionName: "Undo",
+      )
+          .then((value) {
+        if (value == SnackBarClosedReason.action) {
+          //Don't delete from db
+          add(FetchEmployeeList());
+        } else {
+          add(DeleteEmployeeRecordEvent(id: event.item.id));
+        }
+      });
     });
   }
 

@@ -15,4 +15,19 @@ extension ContextExtensions on BuildContext {
       );
 
   dismiss() => Navigator.pop(this);
+
+  Future<SnackBarClosedReason> showToast(
+      {required String message, String? actionName}) {
+    return ScaffoldMessenger.of(this)
+        .showSnackBar(SnackBar(
+          content: Text(message),
+          action: actionName != null
+              ? SnackBarAction(
+                  label: actionName,
+                  onPressed: () {},
+                )
+              : null,
+        ))
+        .closed;
+  }
 }
