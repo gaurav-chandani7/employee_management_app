@@ -12,7 +12,8 @@ class CommonTextField extends StatelessWidget {
       this.readOnly = false,
       this.controller,
       this.initialValue,
-      this.suffixIcon});
+      this.suffixIcon,
+      this.textCapitalization = TextCapitalization.none});
   final String? hintText;
   final Widget? prefixIcon;
   final Widget? suffixIcon;
@@ -22,6 +23,7 @@ class CommonTextField extends StatelessWidget {
   final bool readOnly;
   final TextEditingController? controller;
   final String? initialValue;
+  final TextCapitalization textCapitalization;
 
   @override
   Widget build(BuildContext context) {
@@ -32,6 +34,7 @@ class CommonTextField extends StatelessWidget {
       readOnly: readOnly,
       controller: controller,
       initialValue: initialValue,
+      textCapitalization: textCapitalization,
       style: Theme.of(context).textTheme.titleMedium,
       decoration: InputDecoration(
           hintText: hintText,

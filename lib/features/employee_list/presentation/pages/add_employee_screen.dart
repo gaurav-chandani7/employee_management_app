@@ -119,6 +119,7 @@ class _AddEmployeeScreenState extends State<AddEmployeeScreen> {
               size: 18,
             ),
             validator: (val) => requiredValidator(val, "Name"),
+            textCapitalization: TextCapitalization.words,
           ),
           const SizedBox(
             height: 23,

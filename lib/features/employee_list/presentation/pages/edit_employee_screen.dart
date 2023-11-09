@@ -146,6 +146,7 @@ class _EditEmployeeScreenState extends State<EditEmployeeScreen> {
               size: 18,
             ),
             validator: (val) => requiredValidator(val, "Name"),
+            textCapitalization: TextCapitalization.words,
           ),
           const SizedBox(
             height: 23,
