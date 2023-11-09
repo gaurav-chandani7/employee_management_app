@@ -18,7 +18,7 @@ class MyApp extends StatelessWidget {
       child: SafeArea(
         bottom: false,
         child: MaterialApp(
-            title: 'Employee Management app',
+            title: 'Employee Management',
             routes: appRoutes,
             debugShowCheckedModeBanner: false,
             theme: ThemeData(
