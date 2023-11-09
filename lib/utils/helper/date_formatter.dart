@@ -2,9 +2,7 @@ import 'package:employee_management_app/core/constants/constants.dart';
 
 String formatDate(DateTime date) {
   var now = DateTime.now();
-  var today = DateTime(now.year, now.month, now.day);
-  var dayOfDate = DateTime(date.year, date.month, date.day);
-  var diff = dayOfDate.difference(today).inDays;
+  var diff = compareTillDays(date, now);
   if (diff <= 1 && diff >= -1) {
     if (diff == 1) {
       return "Tomorrow";
@@ -15,4 +13,10 @@ String formatDate(DateTime date) {
     }
   }
   return "${date.day} ${monthNames[date.month - 1].substring(0, 3)} ${date.year}";
+}
+
+int compareTillDays(DateTime date1, DateTime date2) {
+  var newDate1 = DateTime(date1.year, date1.month, date1.day);
+  var newDate2 = DateTime(date2.year, date2.month, date2.day);
+  return newDate1.difference(newDate2).inDays;
 }

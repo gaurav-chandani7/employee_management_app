@@ -24,6 +24,8 @@ class CalendarDialogWidget extends StatefulWidget {
 class _CalendarDialogWidgetState extends State<CalendarDialogWidget> {
   DateTime? selectedDate;
   late final PageController tableController;
+  final ButtonStyle tappedButtonStyle = ElevatedButton.styleFrom(
+      backgroundColor: primaryColor, foregroundColor: whiteColor);
 
   @override
   void initState() {
@@ -287,6 +289,13 @@ class _CalendarDialogWidgetState extends State<CalendarDialogWidget> {
   }
 
   ElevatedButton _afterOneWeekButton() {
+    ButtonStyle? buttonStyle;
+    if (selectedDate != null) {
+      var datesDiff = compareTillDays(selectedDate!, DateTime.now());
+      if (datesDiff == 7) {
+        buttonStyle = tappedButtonStyle;
+      }
+    }
     return ElevatedButton(
         onPressed: () {
           //1 week Relative to today
@@ -294,10 +303,18 @@ class _CalendarDialogWidgetState extends State<CalendarDialogWidget> {
             selectedDate = DateTime.now().add(const Duration(days: 7));
           });
         },
+        style: buttonStyle,
         child: const Text("After 1 week"));
   }
 
   ElevatedButton _nextTuesdayButton() {
+    ButtonStyle? buttonStyle;
+    if ((selectedDate != null && selectedDate!.weekday == DateTime.tuesday)) {
+      var datesDiff = compareTillDays(selectedDate!, DateTime.now());
+      if (datesDiff <= 7 && datesDiff > 0) {
+        buttonStyle = tappedButtonStyle;
+      }
+    }
     return ElevatedButton(
         onPressed: () {
           DateTime date = DateTime.now();
@@ -309,10 +326,18 @@ class _CalendarDialogWidgetState extends State<CalendarDialogWidget> {
             selectedDate = date;
           });
         },
+        style: buttonStyle,
         child: const Text("Next Tuesday"));
   }
 
   ElevatedButton _nextMondayButton() {
+    ButtonStyle? buttonStyle;
+    if ((selectedDate != null && selectedDate!.weekday == DateTime.monday)) {
+      var datesDiff = compareTillDays(selectedDate!, DateTime.now());
+      if (datesDiff <= 7 && datesDiff > 0) {
+        buttonStyle = tappedButtonStyle;
+      }
+    }
     return ElevatedButton(
         onPressed: () {
           DateTime date = DateTime.now();
@@ -324,8 +349,7 @@ class _CalendarDialogWidgetState extends State<CalendarDialogWidget> {
             selectedDate = date;
           });
         },
-        style: ElevatedButton.styleFrom(
-            backgroundColor: primaryColor, foregroundColor: whiteColor),
+        style: buttonStyle,
         child: const Text("Next Monday"));
   }
 
@@ -336,6 +360,10 @@ class _CalendarDialogWidgetState extends State<CalendarDialogWidget> {
             selectedDate = DateTime.now();
           });
         },
+        style: (selectedDate != null &&
+                compareTillDays(selectedDate!, DateTime.now()) == 0)
+            ? tappedButtonStyle
+            : null,
         child: const Text("Today"));
   }
 
@@ -346,8 +374,7 @@ class _CalendarDialogWidgetState extends State<CalendarDialogWidget> {
             selectedDate = null;
           });
         },
-        style: ElevatedButton.styleFrom(
-            backgroundColor: primaryColor, foregroundColor: whiteColor),
+        style: selectedDate == null ? tappedButtonStyle : null,
         child: const Text("No Date"));
   }
 }
